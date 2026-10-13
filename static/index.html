@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>猫狗识别</title>
+</head>
+<body>
+    <h2>上传图片识别猫/狗</h2>
+    <input type="file" id="imgFile" accept="image/*">
+    <div id="result"></div>
+<script>
+const fileInput = document.getElementById("imgFile");
+const resDom = document.getElementById("result");
+fileInput.onchange = async ()=>{
+    const fd = new FormData();
+    fd.append("file", fileInput.files[0]);
+    const resp = await fetch("/predict", {method:"POST", body:fd});
+    const data = await resp.json();
+    resDom.innerText = "识别结果：" + data.result;
+}
+</script>
+</body>
+</html>
+
